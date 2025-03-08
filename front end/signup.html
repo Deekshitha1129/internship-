@@ -10,7 +10,7 @@
     <div class="container">
         <div class="login-container">
             <h2>Create Your Account</h2>
-            <form action="#" method="post">
+            <form id="signupForm" action="#" method="post">
                 <div class="input-group">
                     <label for="fullname">Full Name</label>
                     <input type="text" id="fullname" name="fullname" required>
@@ -32,5 +32,14 @@
             <p>Already have an account? <a href="login.html">Login here</a></p>
         </div>
     </div>
+
+    <script>
+        // JavaScript to redirect to home page after sign-up
+        document.getElementById('signupForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission
+            alert('Sign-up successful! Redirecting to login Page...');
+            window.location.href = 'login.html'; // Redirect to login page
+        });
+    </script>
 </body>
 </html>
