@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmers' Market Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Side Navigation Menu -->
+    <div class="side-nav">
+      <ul>
+        <li class="active" data-target="user-details"><i class="fas fa-user"></i> User Details</li>
+        <li data-target="cart"><i class="fas fa-shopping-cart"></i> Cart</li>
+        <li data-target="reviews"><i class="fas fa-comments"></i> Reviews</li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- User Details Section -->
+      <div id="user-details" class="content-section visible">
+        <div class="profile-picture-container">
+          <img id="profile-picture" src="default-profile.png" alt="Profile Picture">
+          <label for="profile-picture-upload" class="upload-label">
+            <i class="fas fa-camera"></i>
+          </label>
+          <input type="file" id="profile-picture-upload" accept="image/*" style="display: none;">
+        </div>
+        <h1>Welcome, <span id="user-name">USER</span></h1>
+        <p><strong>Email:</strong> <span id="user-email">deek113@gmail.com</span></p>
+        <p><strong>Address:</strong> <span id="user-address">nmamit ,nitte</span></p>
+      </div>
+
+      <!-- Cart Section -->
+      <div id="cart" class="content-section">
+        <h2>Your Cart</h2>
+        <div class="cart-items">
+          <!-- Cart items will be dynamically added here -->
+        </div>
+        <button class="checkout-button">Proceed to Checkout</button>
+      </div>
+
+      <!-- Reviews Section -->
+      <div id="reviews" class="content-section">
+        <h2>Leave a Review</h2>
+        <form id="review-form">
+          <label for="product-name">Product:</label>
+          <select id="product-name" required>
+            <option value="Organic Apples">Organic Apples</option>
+            <option value="Fresh Carrots">Fresh Carrots</option>
+            <option value="Farm Eggs">Farm Eggs</option>
+          </select>
+          <label for="review-text">Review:</label>
+          <textarea id="review-text" rows="4" required></textarea>
+          <button type="submit">Submit Review</button>
+        </form>
+        <div class="reviews-list">
+          <h3>Recent Reviews</h3>
+          <ul id="reviews">
+            <!-- Reviews will be dynamically added here -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -7,33 +7,18 @@
   <link rel="stylesheet" href="product.css">
 </head>
 <body>
-  <div class="product-container">
-    <h1>Fresh Fruits</h1>
-    <div class="fruit-grid">
-      <div class="fruit-item">
-        <div class="fruit-image apple"></div>
-        <h2>Apple</h2>
-        <p class="price">$1.99</p>
-        <button class="add-to-cart">Add to Cart</button>
-        <button class="purchase">Buy Now</button>
-      </div>
-      <div class="fruit-item">
-        <div class="fruit-image banana"></div>
-        <h2>Banana</h2>
-        <p class="price">$0.99</p>
-        <button class="add-to-cart">Add to Cart</button>
-        <button class="purchase">Buy Now</button>
-      </div>
-      <div class="fruit-item">
-        <div class="fruit-image orange"></div>
-        <h2>Orange</h2>
-        <p class="price">$2.49</p>
-        <button class="add-to-cart">Add to Cart</button>
-        <button class="purchase">Buy Now</button>
-      </div>
+  <header>
+    <h1>🍍 Fresh Fruits</h1>
+    <nav>
+      <a href="intern1index.html">Home</a>
+      <a href="#" id="cart-link">PRODUCTS</a>
+    </nav>
+  </header>
+  <main>
+    <div class="fruits-grid" id="fruits-container">
+      <!-- Fruits will be added dynamically via JavaScript -->
     </div>
-  </div>
-
-  <script src="intern1index.html"></script>
+  </main>
+  <script src="product.js"></script>
 </body>
 </html>
