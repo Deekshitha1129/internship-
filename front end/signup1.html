@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer's Market - Sign Up</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .signup-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            color: #2e8b57;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2e8b57;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3cb371;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        .login-link a {
+            color: #2e8b57;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Create Your Account</h2>
+        
+        <form id="signupForm">
+            <!-- User Input Fields -->
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div id="password-error" class="error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+                <div id="confirm-error" class="error"></div>
+            </div>
+            
+            <button type="submit">Sign Up</button>
+        </form>
+        
+        <div class="login-link">
+            <p>Already have an account? <a href="login2.html">Log in here</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            document.getElementById('password-error').textContent = '';
+            document.getElementById('confirm-error').textContent = '';
+            
+            // Get form values
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            // Validate password length
+            if (password.length < 8) {
+                document.getElementById('password-error').textContent = 'Password must be at least 8 characters';
+                return;
+            }
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                document.getElementById('confirm-error').textContent = 'Passwords do not match';
+                return;
+            }
+            
+            // Validate email format
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            // Check if user already exists in localStorage
+            const existingUsers = JSON.parse(localStorage.getItem('farmersMarketUsers') || '[]');
+            if (existingUsers.some(user => user.email === email)) {
+                alert('This email is already registered. Please use a different email or log in.');
+                return;
+            }
+            
+            try {
+                // Store user data in localStorage
+                const newUser = {
+                    fullname,
+                    email,
+                    password // Note: In production, you should hash the password before storing
+                };
+                
+                existingUsers.push(newUser);
+                localStorage.setItem('farmersMarketUsers', JSON.stringify(existingUsers));
+                
+                // Send data to FormSubmit for email confirmation
+                const response = await fetch('https://formsubmit.co/ajax/deekshapoojari9a@gmail.com', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: fullname,
+                        email: email,
+                        _subject: "New Farmer's Market Signup!",
+                        _autoresponse: `Hi ${fullname}, thank you for signing up to Farmer's Market!`,
+                        _template: "table"
+                    })
+                });
+                
+                // Redirect to login page after successful registration
+                alert('Registration successful! You will now be redirected to login.');
+                window.location.href = 'login2.html';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error submitting your form. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

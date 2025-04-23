@@ -33,26 +33,50 @@ profilePictureUpload.addEventListener('change', (e) => {
 });
 
 // Cart Functionality
-const cartItems = [];
-
-function addToCart(productName, price) {
-  cartItems.push({ productName, price });
-  updateCart();
-}
-
 function updateCart() {
   const cartItemsContainer = document.querySelector('.cart-items');
+  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  
   cartItemsContainer.innerHTML = '';
+  
+  if (cartItems.length === 0) {
+    cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
+    return;
+  }
+
+  let totalAmount = 0;
+  
   cartItems.forEach((item) => {
+    totalAmount += item.price;
     const cartItem = document.createElement('div');
     cartItem.classList.add('cart-item');
     cartItem.innerHTML = `
-      <h3>${item.productName}</h3>
-      <p>Price: $${item.price}</p>
+      <img src="${item.image}" alt="${item.name}" style="width: 100px; height: 100px; object-fit: cover;">
+      <h3>${item.name}</h3>
+      <p>Price: Rs ${item.price.toFixed(2)} / ${item.unit}</p>
+      <button onclick="removeFromCart(${item.id})">Remove</button>
     `;
     cartItemsContainer.appendChild(cartItem);
   });
+
+  // Add total amount
+  const totalElement = document.createElement('div');
+  totalElement.classList.add('cart-total');
+  totalElement.innerHTML = `<h3>Total: Rs ${totalAmount.toFixed(2)}</h3>`;
+  cartItemsContainer.appendChild(totalElement);
 }
+
+function removeFromCart(productId) {
+  let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  cartItems = cartItems.filter(item => item.id !== productId);
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+  updateCart();
+}
+
+// Initial cart update when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  updateCart();
+});
 
 // Review Section Functionality
 const reviewForm = document.getElementById('review-form');
